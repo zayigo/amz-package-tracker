@@ -3,6 +3,12 @@
   "name": "Amazon Package Tracker",
   "version": "1.5",
   "description": "Track Amazon packages across all Amazon domains",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{2e07463c-4bf4-4009-bd2a-16371ee6d7f3}",
+      "strict_min_version": "109.0"
+    }
+  },
   "permissions": [
     "activeTab",
     "cookies",
@@ -35,7 +41,8 @@
     "https://www.amazon.com.cn/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
   },
   "content_scripts": [
     {
