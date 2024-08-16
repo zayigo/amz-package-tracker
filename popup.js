@@ -46,13 +46,26 @@ const refreshData = () => {
     if (response && response.success) {
       rawResponse = response;
       const data = response.packageLocationDetails;
-      updateMap(
-        data.transporterDetails.geoLocation.latitude,
-        data.transporterDetails.geoLocation.longitude,
-        data.destinationAddress.geoLocation.latitude,
-        data.destinationAddress.geoLocation.longitude
-      );
-      updateInfo(response);
+      if (data.trackingObjectState === 'DELIVERED') {
+        // Package has been delivered, only show destination
+        updateMap(
+          data.destinationAddress.geoLocation.latitude,
+          data.destinationAddress.geoLocation.longitude,
+          data.destinationAddress.geoLocation.latitude,
+          data.destinationAddress.geoLocation.longitude
+        );
+        document.getElementById('info').innerHTML =
+          '<p>Package has been delivered!</p>';
+      } else {
+        // Package is still in transit
+        updateMap(
+          data.transporterDetails.geoLocation.latitude,
+          data.transporterDetails.geoLocation.longitude,
+          data.destinationAddress.geoLocation.latitude,
+          data.destinationAddress.geoLocation.longitude
+        );
+        updateInfo(response);
+      }
     } else {
       console.error(
         'Error refreshing data:',
