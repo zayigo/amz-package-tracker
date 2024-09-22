@@ -2,6 +2,11 @@
   "addons": {
     "{2e07463c-4bf4-4009-bd2a-16371ee6d7f3}": {
       "updates": [
+        {
+          "version": "1.5",
+          "update_link": "https://github.com/zayigo/amz-package-tracker/releases/download/v1.5/amz-package-tracker-1.5_firefox.xpi",
+          "update_hash": "sha256:749ab3bbab0bc50bbaff8d47abacb14908de875bf553f50307eb50dbb626f382"
+        }
       ]
     }
   }
