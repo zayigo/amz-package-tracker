@@ -1,31 +1,37 @@
-let lastTrackingData = null;
+let lastRequest = {};
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === 'getTrackingInfo') {
-    chrome.cookies.getAll({ url: `https://${request.domain}` }, (cookies) => {
-      const sessionCookies = cookies.reduce((acc, cookie) => {
-        acc[cookie.name] = cookie.value;
-        return acc;
-      }, {});
-
-      fetchTrackingData(
-        request.trackingId,
-        request.csrfToken,
-        sessionCookies,
-        request.domain
-      ).then((data) => {
-        lastTrackingData = data;
-        sendResponse(data);
-      });
-    });
+  if (
+    request.action === 'getTrackingInfo' ||
+    request.action === 'refreshTracking'
+  ) {
+    chrome.cookies.getAll(
+      { url: `https://${request.domain || lastRequest.domain}` },
+      (cookies) => {
+        const sessionCookies = cookies.reduce((acc, cookie) => {
+          acc[cookie.name] = cookie.value;
+          return acc;
+        }, {});
+        fetchTrackingData(
+          request.trackingId || lastRequest.trackingId,
+          request.csrfToken || lastRequest.csrfToken,
+          sessionCookies,
+          request.domain || lastRequest.domain
+        ).then((data) => {
+          if (request.trackingId) {
+            lastRequest.trackingId = request.trackingId;
+          }
+          if (request.csrfToken) {
+            lastRequest.csrfToken = request.csrfToken;
+          }
+          if (request.domain) {
+            lastRequest.domain = request.domain;
+          }
+          sendResponse(data);
+        });
+      }
+    );
     return true; // Indicates we will send a response asynchronously
-  } else if (request.action === 'refreshTracking') {
-    if (lastTrackingData) {
-      sendResponse(lastTrackingData);
-    } else {
-      sendResponse({ success: false, error: 'No tracking data available' });
-    }
-    return true;
   }
 });
 
