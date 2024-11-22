@@ -6,6 +6,11 @@
           "version": "1.5",
           "update_link": "https://github.com/zayigo/amz-package-tracker/releases/download/v1.5/amz-package-tracker-1.5_firefox.xpi",
           "update_hash": "sha256:749ab3bbab0bc50bbaff8d47abacb14908de875bf553f50307eb50dbb626f382"
+        },
+        {
+          "version": "1.6",
+          "update_link": "https://github.com/zayigo/amz-package-tracker/releases/download/v1.6/amz-package-tracker-1.6_firefox.xpi",
+          "update_hash": "sha256:3fb3a0a9d56c273686a44fe4a06c6788bfd1908efec58f9b5d4a4a76e1751825"
         }
       ]
     }
