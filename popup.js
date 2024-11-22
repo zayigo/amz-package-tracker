@@ -56,6 +56,9 @@ const refreshData = () => {
         );
         document.getElementById('info').innerHTML =
           '<p>Package has been delivered!</p>';
+      } else if (data.trackingObjectState === 'NOT_READY') {
+        document.getElementById('info').innerHTML =
+          '<p>Package is not yet ready for delivery tracking</p>';
       } else {
         // Package is still in transit
         updateMap(
@@ -81,17 +84,15 @@ const startRefreshInterval = () => {
   return setInterval(refreshData, 5000);
 };
 
-document.getElementById('refresh').addEventListener('click', refreshData);
-
-document.getElementById('copy').addEventListener('click', () => {
-  navigator.clipboard
-    .writeText(JSON.stringify(rawResponse, null, 2))
-    .catch((err) => console.error('Failed to copy: ', err));
-});
-
-document.addEventListener('DOMContentLoaded', refreshData);
-
 document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('refresh').addEventListener('click', refreshData);
+
+  document.getElementById('copy').addEventListener('click', () => {
+    navigator.clipboard
+      .writeText(JSON.stringify(rawResponse, null, 2))
+      .catch((err) => console.error('Failed to copy: ', err));
+  });
+
   refreshData();
   refreshInterval = startRefreshInterval();
 });
