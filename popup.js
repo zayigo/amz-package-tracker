@@ -66,11 +66,18 @@ const refreshData = () => {
           data.destinationAddress.geoLocation.latitude,
           data.destinationAddress.geoLocation.longitude
         );
-        document.getElementById('info').innerHTML =
-          '<p>Package has been delivered!</p>';
+        const info = document.getElementById('info');
+        info.textContent = '';
+        const deliveredElement = document.createElement('p');
+        deliveredElement.textContent = 'Package has been delivered!';
+        info.appendChild(deliveredElement);
       } else if (data.trackingObjectState === 'NOT_READY') {
-        document.getElementById('info').innerHTML =
-          '<p>Package is not yet ready for delivery tracking</p>';
+        const info = document.getElementById('info');
+        info.textContent = '';
+        const notReadyElement = document.createElement('p');
+        notReadyElement.textContent =
+          'Package is not yet ready for delivery tracking';
+        info.appendChild(notReadyElement);
       } else {
         // Package is still in transit
         updateMap(
@@ -86,8 +93,11 @@ const refreshData = () => {
         'Error refreshing data:',
         response ? response.error : 'Unknown error'
       );
-      document.getElementById('info').innerHTML =
-        '<p>Error refreshing data. Please try again.</p>';
+      const info = document.getElementById('info');
+      info.textContent = '';
+      const errorElement = document.createElement('p');
+      errorElement.textContent = 'Error refreshing data. Please try again.';
+      info.appendChild(errorElement);
     }
   });
 };
