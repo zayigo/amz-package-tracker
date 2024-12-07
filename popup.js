@@ -33,12 +33,24 @@ const updateInfo = (data) => {
   const lastUpdate = new Date(
     pkgDetails.transporterDetails.geoLocation.locationTime * 1000
   ).toLocaleString();
-  info.innerHTML = `
-<p>Last Update: ${lastUpdate}</p>
-<p>Status: ${pkgDetails.trackingObjectState}</p>
-<p>Stops Remaining: ${pkgDetails.stopsRemaining}</p>
-<p>Tracking ID: ${pkgDetails.trackingObjectId}</p>
-`;
+
+  info.textContent = '';
+
+  const lastUpdateElement = document.createElement('p');
+  lastUpdateElement.textContent = `Last Update: ${lastUpdate}`;
+  info.appendChild(lastUpdateElement);
+
+  const statusElement = document.createElement('p');
+  statusElement.textContent = `Status: ${pkgDetails.trackingObjectState}`;
+  info.appendChild(statusElement);
+
+  const stopsElement = document.createElement('p');
+  stopsElement.textContent = `Stops Remaining: ${pkgDetails.stopsRemaining}`;
+  info.appendChild(stopsElement);
+
+  const trackingIdElement = document.createElement('p');
+  trackingIdElement.textContent = `Tracking ID: ${pkgDetails.trackingObjectId}`;
+  info.appendChild(trackingIdElement);
 };
 
 const refreshData = () => {
